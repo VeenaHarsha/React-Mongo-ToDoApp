@@ -1,17 +1,14 @@
 * {
     margin:0
 }
-.l-main-div {
-    width: 80%;
+.list-cat-div {
+    width: 94%;
     padding: 5px;
-    border:1 px solid red;
+    margin-left:2.5rem;
   }
   .list-input {
-    border: 1px solid #ccc;
     padding: 10px;
-    width: 80%;
+    width: 100%;
     margin-bottom: 0.5rem;
   }
-  h1 {
-      color:green;
-  }
+  

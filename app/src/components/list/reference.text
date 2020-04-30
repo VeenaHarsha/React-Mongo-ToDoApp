@@ -1,0 +1,13 @@
+steps for mongo
+------------------
+mongo
+use my_todo_db
+show collections
+db.lists.find()
+db.todomodels.find()
+
+------
+
+sudo lsof -i:2809
+sudo kill -9 pid
+

@@ -36,7 +36,6 @@ router.post('/add/:listId', async (req, res) => {
 router.delete('/:taskId', async (req, res) => {
   // const listId = 
   try {
-
   //   await.ToDoModel.update(
   //     {'_id': ObjectId("5150a1199fac0e6910000002")}, 
   //     { $pull: { "tasks" : { _id: req.params.taskId } } },

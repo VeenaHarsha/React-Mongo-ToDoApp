@@ -1,29 +1,55 @@
-.list-items {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    justify-content: space-between;
-    /* border: 1px dotted #ccc; */
-    /* border: 1px solid blue; */
-    margin:0.3em;
-  }
-  li{
-    list-style-type: none;
-    text-align: left;
-    border:1px solid #ccc;
-  }
-  img {
-    text-align:right ;
-  }
-  .list-label {
-    width: 35rem;
-    font-size: 14px;
-    word-wrap: break-word;
-    padding: 0.5rem;
-  }
-  input {
-    width: 35rem;
-    padding: 0.5rem;
-    margin-left:0.25rem;
-    border: 1px dotted red;
-  }
+.l-main-div {
+  width: 100%;
+  padding: 5px;
+}
+
+li {
+  list-style-type: none;
+  text-align: left;
+}
+/* .list-items {
+  text-align: left;
+  width: 94%;
+  margin-left:2.5rem;
+  display: flex;
+  align-items: stretch;
+  border:1px solid #ccc;
+}
+.list-item {
+  display: flex;
+  align-items: stretch;
+  width: 35rem; 
+  font-size: 14px;
+  word-wrap: break-word;
+  padding: 0.5rem;
+  position: relative; 
+} */
+.list-item {
+  width:400px;
+  height:35px;
+  background-color: lightgray;
+  margin:20px auto;
+  border-radius: 5px;
+  position: relative; 
+}
+.list-item-label {
+  font-size: 14px;
+}
+.list-item input{
+  border:none;
+  background-color: transparent;
+  padding: 10px;
+}
+.list-item input:focus {
+  outline: none;
+}
+.imgEdit{
+  flex-grow:0.1;
+  position: absolute;
+  right:25px;
+}
+.imgDel{
+  flex-grow:0.1;
+  position: absolute;
+  right:0px;
+}
