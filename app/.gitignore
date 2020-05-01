@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+reference.text
+ListItems_bkp.js
+UpdatNumbersArray.js
+ListItemContext.js

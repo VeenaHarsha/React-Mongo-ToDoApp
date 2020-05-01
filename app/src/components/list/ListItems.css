@@ -1,44 +1,18 @@
-.l-main-div {
-  width: 100%;
-  padding: 5px;
-}
-
-li {
-  list-style-type: none;
-  text-align: left;
-}
-/* .list-items {
-  text-align: left;
-  width: 94%;
-  margin-left:2.5rem;
-  display: flex;
-  align-items: stretch;
-  border:1px solid #ccc;
-}
 .list-item {
   display: flex;
   align-items: stretch;
   width: 35rem; 
   font-size: 14px;
   word-wrap: break-word;
-  padding: 0.5rem;
   position: relative; 
-} */
-.list-item {
-  width:400px;
-  height:35px;
-  background-color: lightgray;
-  margin:20px auto;
-  border-radius: 5px;
-  position: relative; 
-}
+} 
+
 .list-item-label {
   font-size: 14px;
 }
 .list-item input{
-  border:none;
-  background-color: transparent;
-  padding: 10px;
+  /* border:none; */
+  background-color: white;
 }
 .list-item input:focus {
   outline: none;
@@ -46,10 +20,30 @@ li {
 .imgEdit{
   flex-grow:0.1;
   position: absolute;
-  right:25px;
+  right:16rem;
 }
 .imgDel{
   flex-grow:0.1;
   position: absolute;
-  right:0px;
+  right:14rem;
+}
+p {
+  padding: 10px;
+  width: 60%;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  background-color: lightgray;
+  border:none;
+  align-content: center;
+}
+.list-item-input {
+  padding: 10px;
+  width: 60%;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  background-color: transparent;
+  align-content: center;
+}
+.list-item input {
+  outline: none;
 }
