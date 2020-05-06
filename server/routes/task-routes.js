@@ -12,41 +12,60 @@ router.get('/:listId/', async (req, res) => {
   }
 })
 
-router.post('/add/:listId', async (req, res) => {
-  const listId = req.params.listId
-  const newTask = (
-    {
-      taskName: req.body.taskName,
-      completed: req.body.completed,
-      dueDate: req.body.dueDate,
-      notes: req.body.notes,
-      priority: req.body.priority
-    }
-  )
+router.post('/:listId/', async (req, res) => {
+  const { taskName } = req.body
+  console.log('Am In Task Add...', taskName)
+  const id = req.params.listId
+  const list = await ToDoModel.findById(id)
+  console.log('ToDo is :', list)
   try {
-    const todo = await ToDoModel.findOne({ _id: listId })
-    todo.tasks.push(newTask)
-    await todo.save()
-    res.status(200).json('Task added!')
+    const newTask = {
+      taskName: taskName,
+      completed: false,
+      dueDate: '',
+      priority: 'low',
+      notes: ''
+    }
+    list.tasks.push(newTask)
+    await list.save()
+    return res.status(200).json(list)
   } catch (err) {
     res.status(500).json('Error:' + err)
   }
 })
 
-router.delete('/:taskId', async (req, res) => {
-  // const listId = 
+router.put('/update/:listId', async (req, res) => {
+  console.log('Request Is:', req.body)
+  const listId = req.params.listId
+  const { taskId, taskName, completed, dueDate, notes, priority } = req.body
+
   try {
-  //   await.ToDoModel.update(
-  //     {'_id': ObjectId("5150a1199fac0e6910000002")}, 
-  //     { $pull: { "tasks" : { _id: req.params.taskId } } },
-  // false,
-  // true 
-  // )
-    console.log(ToDoModel.tasks)
-    const task = await ToDoModel.findById(req.params.taskId)
-    console.log('TASKKK:', task)
-    // todo.tasks.pop(taskId)
-    res.status(200).json('Task Deleted')
+    const list = await ToDoModel.findOne({ _id: listId })
+    const index = list.tasks.findIndex(list => list._id == taskId)
+    list.tasks[index].taskName = taskName
+    list.tasks[index].completed = completed
+    list.tasks[index].dueDate = dueDate
+    list.tasks[index].notes = notes
+    list.tasks[index].priority = priority
+    await list.save()
+    res.status(200).json(list)
+  } catch (err) {
+    res.status(500).json('Error:' + err)
+  }
+})
+
+router.delete('/:listId', async (req, res) => {
+  console.log('Am in delete: ', req.params.listId)
+  const { taskId } = req.body
+  const listId = req.params.listId
+  console.log('Task Id is: ', taskId)
+  try {
+    const list = await ToDoModel.findOne({ _id: listId })
+    const index = list.tasks.findIndex(list => list._id == taskId)
+    console.log('Task to delete:', index)
+    await list.tasks.splice(index, 1)
+    await list.save
+    res.status(200).json([list])
   } catch (err) {
     res.status(500).json('Error:' + err)
   }

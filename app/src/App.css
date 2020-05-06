@@ -2,6 +2,93 @@
  box-sizing: border-box;
 }
 .App {
-  max-width:  680px; 
-  /* margin:0 auto; */
+  max-width:  80%; 
+  font-family: 'Courier New', Courier, monospace,Arial, Helvetica, sans-serif;
+  background-color: wheat;
+  margin:0 auto;
+  /* border: 1px solid #ccc; */
  }
+ .app-title{
+  
+   height: 3em;
+   text-align: center;
+   width: 100%;
+   font-weight: bold;
+   font-size: 20px;
+ }
+ .main-app {
+  width: 30%;
+  margin-top:auto;
+  float:left;
+ }
+
+.header {
+  padding: 20px;
+  text-align: center;
+}
+
+.column {
+  /* border:10px solid red; */
+  float: left;
+  padding: 10px;
+}
+
+.column.side {
+  /* border:10px solid green; */
+  border: 1px solid #cccccc;
+  width: 30%;
+}
+
+.column.middle {
+  width: 40%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width: 100%;
+  }
+}
+/* TaskEditForm - container */
+.task-form-container{
+  /* background-color: antiquewhite; */
+  border-radius: 5px;
+  padding:10px;
+}
+
+.task-form-container input[type=text], [type=date], select, textarea {
+  width:80%;
+  padding:10px;
+  border-radius:5px;
+  border:1px solid rgb(245, 223, 194);
+  margin-bottom: 2px;
+}
+.task-form-container input[type=checkbox] {
+  padding:10px;
+  margin-bottom: 2px;
+}
+
+.task-form-container label {
+  padding: 5px;
+  display: inline-block;
+  /* width:30%; */
+}
+.task-form-container button {
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    display: inline-block;
+    /* background-color:#faebd8; */
+    color:white;
+    font-weight: bold;
+    background-color: #A0522D;
+}
