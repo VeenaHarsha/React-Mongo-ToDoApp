@@ -1,13 +1,22 @@
-.task-div{
-  /* width:70%; */
-  padding: 10px;
-  background-color: #f1f1f1;
-  /* border: 10px solid blue; */
-  /* margin-left: 25rem; */
+.task-item{
+  display:flex;
+  padding: 5px;
+  margin-bottom: 0.2rem;
+  border-radius: 5px;
+  background-color: antiquewhite;
+  border:none;
+  align-content: center;
+
 }
-.task-info{
-  float: left;
-  width:70%;
-  padding: 20px;
-  background-color: #f1f1f1;
+h3 {
+  /* background-color:antiquewhite; */
+  text-align: center;
+  padding:2px;
+  font-style: italic;
+}
+.imgDel{
+  flex: 1;
+}
+.pValue {
+  flex-grow: 100
 }

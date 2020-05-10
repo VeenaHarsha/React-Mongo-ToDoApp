@@ -55,17 +55,16 @@ router.put('/update/:listId', async (req, res) => {
 })
 
 router.delete('/:listId', async (req, res) => {
-  console.log('Am in delete: ', req.params.listId)
+  console.log('Am in delete: ', req.body)
   const { taskId } = req.body
   const listId = req.params.listId
-  console.log('Task Id is: ', taskId)
   try {
     const list = await ToDoModel.findOne({ _id: listId })
     const index = list.tasks.findIndex(list => list._id == taskId)
-    console.log('Task to delete:', index)
-    await list.tasks.splice(index, 1)
-    await list.save
-    res.status(200).json([list])
+    console.log('Task to delete:', index, list.tasks[index])
+    list.tasks.splice(index, 1)
+    await list.save()
+    res.status(200).json('Task Deleted..')
   } catch (err) {
     res.status(500).json('Error:' + err)
   }

@@ -4,17 +4,15 @@ import './ShowListItems.css'
 function ShowListItems (props) {
   const [editMe, setEditMe] = useState(false)
   const [listName, setListName] = useState(props.listName)
-  const [listItems, setListItems] = useState(props.listItems)
-  const { listItem, handleUserRequest } = props
+  const { listItems, listItem, handleUserListRequest } = props
 
   const handleClick = (flag, selListItem, selListName) => {
-    console.log('Am Clicked!!', flag, selListItem, selListName)
-    handleUserRequest(flag, selListItem, selListName)
+    handleUserListRequest(flag, selListItem, selListName)
   }
 
-  const handleListUpdate = async (event, listName, listId) => {
-    console.log('Am On Update...', listId, listName)
+  const handleListUpdate = async (event) => {
     event.preventDefault()
+    const listId = listItem._id
     const options = {
       method: 'PUT',
       headers: {
@@ -25,12 +23,13 @@ function ShowListItems (props) {
     try {
       const response = await window.fetch(`http://localhost:2809/list/update/${listId}`, options)
       const data = await response.json()
-      const newListItems = listItems.map(item => {
+      listItems.map(item => {
         if (item._id === listId) {
           item.listName = data.listName
         }
       })
-      setListItems({ listItems: newListItems })
+      props.addListItem(listItems)
+      setEditMe(false)
     } catch (err) {
       console.log('Error:', err)
     }
@@ -40,20 +39,19 @@ function ShowListItems (props) {
     const options = { method: 'DELETE' }
     try {
       await window.fetch(`http://localhost:2809/list/${id}`, options)
-      setListItems(listItems.filter(item => item._id !== id))
+      const newList = listItems.filter(list => list._id !== id)
+      props.addListItem(newList)
     } catch (err) {
       console.log('Error:', err)
     }
   }
-
   return (
     <>
       {editMe
-        ? (<form className='form-div' onSubmit={event => handleListUpdate(event, listName, listItem._id)}>
+        ? (<form className='form-div' onSubmit={handleListUpdate}>
           <input
             type='text'
             className='list-item-update'
-            // onChange={(e) => onUpdateList(e, props.listItem._id, e.target.value)}
             onChange={(event) => setListName(event.target.value)}
             onBlur={() => setEditMe(false)}
             defaultValue={listItem.listName}
@@ -62,7 +60,6 @@ function ShowListItems (props) {
         )
         : (
           <div className='list-item'>
-            {/* <p className='list-item' onClick={handleClicks(listItem)}> {listItem.listName} */}
             <p className='listPValue' onClick={() => handleClick(true, listItem._id, listItem.listName)}>{listItem.listName}</p>
             <img className='imgEdit' onClick={() => setEditMe(true)} src={require('./../../images/edit.png')} alt='Edit' />
             <img className='imgDel' onClick={() => handleListDelete(props.listItem._id)} src={require('./../../images/delete.png')} alt='Delete' />

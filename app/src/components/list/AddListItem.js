@@ -1,30 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './AddListItem.css'
 
 function AddListItem (props) {
-  const [listName, setListName] = useState('')
-  const [listItems, setListItems] = useState(props.listItems)
-  // const { onCreateList } = props
+  // const [listName, setListName] = useState('')
+  // const [listItems, setListItems] = useState(props.listItems)
 
   const handleChange = (event) => {
-    setListName(event.target.value)
+    props.addListName(event.target.value)
   }
 
-  const handleCreateList = async (event, listName) => {
+  const handleCreateList = async (event) => {
     event.preventDefault()
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
       },
-      body: JSON.stringify({ listName: listName })
+      body: JSON.stringify({ listName: props.listName })
     }
     try {
       const response = await window.fetch('http://localhost:2809/list/add', options)
       const data = await response.json()
-      console.log('Data Is:', data)
-      setListItems([...listItems, { _id: data._id, listName: data.listName }])
-      setListName('')
+      const newList = [...props.listItems, { _id: data._id, listName: data.listName }]
+      props.addListItem(newList)
+      props.addListName('')
     } catch (err) {
       console.log('Error:', err)
     }
@@ -32,13 +31,13 @@ function AddListItem (props) {
 
   return (
     <div className='list-cat-div'>
-      <form onSubmit={(event) => handleCreateList(event, listName)}>
+      <form onSubmit={handleCreateList}>
         <input
           type='text'
           className='list-cat-input'
           placeholder='Add List Category..'
           onChange={handleChange}
-          value={listName}
+          value={props.listName}
         />
       </form>
     </div>

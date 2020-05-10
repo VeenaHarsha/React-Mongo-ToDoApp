@@ -5,14 +5,15 @@ import ShowListItems from './list/ShowListItems'
 import TaskEditForm from './tasks/TaskEditForm'
 
 function ToDoApp () {
+  const [listName, setListName] = useState('')
   const [listItems, setListItems] = useState([
     {
       listName: '',
       tasks: [
         {
           taskName: '',
-          isCompleted: false,
-          dueDate: '',
+          completed: false,
+          dueDate: null,
           priority: 'low',
           notes: ''
         }
@@ -20,15 +21,19 @@ function ToDoApp () {
     }
   ])
 
-  const [userRequest, setUserRequest] = useState({
+  const [userListRequest, setUserListRequest] = useState({
     showTask: false,
     selectedList: '',
     selListName: ''
   })
-  const [userRequestTask, setUserRequestTask] = useState({
+  const [userTaskRequest, setUserTaskRequest] = useState({
     showEditTask: false,
     selectedTask: {}
   })
+
+  useEffect(() => {
+    getListItems()
+  }, [])
 
   const getListItems = async () => {
     try {
@@ -39,24 +44,27 @@ function ToDoApp () {
       console.log('Error:', err)
     }
   }
-  useEffect(() => {
-    console.log('List Items - UseEffect- Running')
-    getListItems()
-  }, [])
 
-  const onSetUserRequest = (flag, selList, selListName) => {
-    console.log('We reached Safe :', flag, selList, selListName)
-    setUserRequest({
+  const onSetUserListRequest = (flag, selList, selListName) => {
+    setUserListRequest({
       showTask: flag,
       selectedList: selList,
       selListName: selListName
     })
   }
-  const onSetUserRequestTask = (flag, selTask) => {
-    setUserRequestTask({
+  const onSetUserTaskRequest = (flag, selTask) => {
+    setUserTaskRequest({
       showEditTask: flag,
       selectedTask: selTask
     })
+  }
+
+  const addListItem = (list) => {
+    setListItems(list)
+  }
+
+  const addListName = (newListName) => {
+    setListName(newListName)
   }
   return (
     <div>
@@ -66,36 +74,42 @@ function ToDoApp () {
       <div className='row'>
         <div className='column side'>
           <AddListItem
+            addListItem={addListItem}
+            addListName={addListName}
+            listName={listName}
             listItems={listItems}
           />
-          {listItems.length && listItems.map(lItem => (
-            <div key={lItem._id}>
+          <div>
+            {listItems.length && listItems.map(lItem => (
               <ShowListItems
-                handleUserRequest={onSetUserRequest}
+                key={lItem._id}
+                handleUserListRequest={onSetUserListRequest}
                 listItem={lItem}
                 listItems={listItems}
+                addListItem={addListItem}
+                addListName={addListName}
               />
-            </div>
-          ))}
-
+            ))}
+          </div>
         </div>
         <div className='column middle'>
-          {userRequest.showTask &&
+          {userListRequest.showTask &&
             <AddTask
-              listName={userRequest.selListName}
+              listName={userListRequest.selListName}
               listItems={listItems}
-              listItemId={userRequest.selectedList}
-              handleUserRequestTask={onSetUserRequestTask}
+              listItemId={userListRequest.selectedList}
+              handleUserTaskRequest={onSetUserTaskRequest}
             />}
         </div>
         <div className='column side'>
-          {userRequestTask.showEditTask &&
+          {userTaskRequest.showEditTask &&
             <TaskEditForm
-              task={userRequestTask.selectedTask}
-              listItemId={userRequest.selectedList}
+              selectedTask={userTaskRequest.selectedTask}
+              selectedList={userListRequest.selectedList}
             />}
         </div>
       </div>
+      <div className='flex-footer' />
     </div>
   )
 }

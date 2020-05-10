@@ -1,19 +1,18 @@
 import React, { useState } from 'react'
 
 function TaskEditForm (props) {
-  // const { handleInputChange, listItemId, onUpdateTask, task } = props
-  const listId = props.listItemId
-  const [task, setTask] = useState(props.task)
+  const [selectedTask, setSelectedTask] = useState(props.selectedTask)
+  const [showForm, setShowForm] = useState(true)
 
   const handleInputChange = (event) => {
     const target = event.target
     const name = target.name
     const value = target.type === 'checkbox' ? target.checked : target.value
-    setTask({ ...task, [name]: value })
+    console.log('Selected Tasks is: ', selectedTask, name, value)
+    setSelectedTask({ ...selectedTask, [name]: value })
   }
 
-  const handleTaskUpdate = async (event, listId, task) => {
-    console.log('Am On Task Edit Form Update...', listId, task)
+  const handleTaskUpdate = async (event) => {
     event.preventDefault()
     const options = {
       method: 'PUT',
@@ -21,73 +20,74 @@ function TaskEditForm (props) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        taskId: task._id,
-        taskName: task.taskName,
-        notes: task.notes,
-        dueDate: task.dueDate,
-        priority: task.priority,
-        completed: task.completed
+        taskId: selectedTask._id,
+        taskName: selectedTask.taskName,
+        notes: selectedTask.notes,
+        dueDate: selectedTask.dueDate,
+        priority: selectedTask.priority,
+        completed: selectedTask.completed
       })
     }
     try {
-      const response = await window.fetch(`http://localhost:2809/task/update/${listId}`, options)
-      const data = await response.json()
-      console.log('Data Is:', data)
+      const response = await window.fetch(`http://localhost:2809/task/update/${props.selectedList}`, options)
+      await response.json()
     } catch (err) {
       console.log('Error:', err)
     }
   }
+
   return (
-    <div className='task-form-container'>
-      <form onSubmit={(event) => handleTaskUpdate(event, listId, task)}>
+    <div className='task-form-container' style={{ display: showForm ? 'block' : 'none' }}>
+      <form onSubmit={handleTaskUpdate}>
         <div>
           <input
             type='checkbox'
-            name='isCompleted'
-            checked={task.isCompleted}
+            name='completed'
+            checked={selectedTask.completed}
             onChange={handleInputChange}
           />
           <label>
-            Is completed
+            Completed
           </label>
         </div>
         <div>
-          <label>
-            <input
-              type='text'
-              name='taskName'
-              placeholder='Add Task'
-              onChange={handleInputChange}
-              value={task.taskName}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            <textarea
-              name='notes'
-              placeholder='Add Notes'
-              value={task.notes}
-              onChange={handleInputChange}
-            />
-          </label>
-        </div>
-        <label> Priority
-          <select
-            name='priority'
-            value={task.priority}
+          <label>Task Name</label>
+          <input
+            type='text'
+            name='taskName'
+            placeholder='Add Task'
             onChange={handleInputChange}
-          >
-            <option value='high'> High </option>
-            <option value='mid'> Mid </option>
-            <option value='low'> Low </option>
-          </select>
-        </label>
-        <label>Due Date
-          <input type='date' name='dueDate' value='task.dueDate' />
-        </label>
-        <button>Update</button>
-        {/* <button>Delete</button> */}
+            value={selectedTask.taskName}
+          />
+        </div>
+        <div>
+          <label>Notes</label>
+          <textarea
+            name='notes'
+            placeholder='Add Notes'
+            value={selectedTask.notes}
+            onChange={handleInputChange}
+          />
+        </div>
+        <label> Priority </label>
+        <select
+          name='priority'
+          value={selectedTask.priority}
+          onChange={handleInputChange}
+        >
+          <option value='high'> High </option>
+          <option value='mid'> Mid </option>
+          <option value='low'> Low </option>
+        </select>
+        <label>Due Date </label>
+        <input
+          type='date'
+          name='dueDate'
+          defaultValue={selectedTask.dueDate}
+          onChange={handleInputChange}
+        />
+        {/* <button>Update</button> */}
+        <button onClick={() => setShowForm(false)}>Close</button>
       </form>
     </div>
   )
