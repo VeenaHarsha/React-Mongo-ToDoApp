@@ -6,6 +6,7 @@ import TaskEditForm from './tasks/TaskEditForm'
 
 function ToDoApp () {
   const [listName, setListName] = useState('')
+  const [showTaskEditForm, setshowTaskEditForm] = useState(false)
   const [listItems, setListItems] = useState([
     {
       listName: '',
@@ -66,6 +67,11 @@ function ToDoApp () {
   const addListName = (newListName) => {
     setListName(newListName)
   }
+
+  const handleSetTaskEditForm = (flag) => {
+    setshowTaskEditForm(flag)
+  }
+
   return (
     <div>
       <div className='header'>
@@ -88,6 +94,8 @@ function ToDoApp () {
                 listItems={listItems}
                 addListItem={addListItem}
                 addListName={addListName}
+                showTaskEditForm={showTaskEditForm}
+                handleSetTaskEditForm={handleSetTaskEditForm}
               />
             ))}
           </div>
@@ -99,17 +107,21 @@ function ToDoApp () {
               listItems={listItems}
               listItemId={userListRequest.selectedList}
               handleUserTaskRequest={onSetUserTaskRequest}
+              handleSetTaskEditForm={handleSetTaskEditForm}
             />}
         </div>
         <div className='column side'>
           {userTaskRequest.showEditTask &&
             <TaskEditForm
+              showTaskEditForm={showTaskEditForm}
+              handleSetTaskEditForm={handleSetTaskEditForm}
               selectedTask={userTaskRequest.selectedTask}
               selectedList={userListRequest.selectedList}
+              handleUserTaskRequest={onSetUserTaskRequest}
             />}
         </div>
       </div>
-      <div className='flex-footer' />
+      {/* <div className='flex-footer' /> */}
     </div>
   )
 }

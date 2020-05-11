@@ -4,9 +4,10 @@ import './ShowListItems.css'
 function ShowListItems (props) {
   const [editMe, setEditMe] = useState(false)
   const [listName, setListName] = useState(props.listName)
-  const { listItems, listItem, handleUserListRequest } = props
+  const { listItems, listItem, handleUserListRequest, showTaskEditForm, handleSetTaskEditForm } = props
 
   const handleClick = (flag, selListItem, selListName) => {
+    showTaskEditForm && handleSetTaskEditForm(false)
     handleUserListRequest(flag, selListItem, selListName)
   }
 

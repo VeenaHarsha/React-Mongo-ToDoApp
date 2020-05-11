@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 function TaskEditForm (props) {
-  const [selectedTask, setSelectedTask] = useState(props.selectedTask)
-  const [showForm, setShowForm] = useState(true)
+  const { selectedTask, handleUserTaskRequest, showTaskEditForm, handleSetTaskEditForm } = props
 
   const handleInputChange = (event) => {
     const target = event.target
     const name = target.name
     const value = target.type === 'checkbox' ? target.checked : target.value
-    console.log('Selected Tasks is: ', selectedTask, name, value)
-    setSelectedTask({ ...selectedTask, [name]: value })
+    // props.setSelectedTask({ ...selectedTask, [name]: value })
+    handleUserTaskRequest(true, { ...selectedTask, [name]: value })
   }
 
   const handleTaskUpdate = async (event) => {
@@ -36,8 +35,12 @@ function TaskEditForm (props) {
     }
   }
 
+  const clickHandler = () => {
+    handleSetTaskEditForm(false)
+  }
+
   return (
-    <div className='task-form-container' style={{ display: showForm ? 'block' : 'none' }}>
+    <div className='task-form-container' style={{ display: showTaskEditForm ? 'block' : 'none' }}>
       <form onSubmit={handleTaskUpdate}>
         <div>
           <input
@@ -86,8 +89,8 @@ function TaskEditForm (props) {
           defaultValue={selectedTask.dueDate}
           onChange={handleInputChange}
         />
-        {/* <button>Update</button> */}
-        <button onClick={() => setShowForm(false)}>Close</button>
+        <button onClick={clickHandler}>Update</button>
+        <button onClick={clickHandler}>Close</button>
       </form>
     </div>
   )

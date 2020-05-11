@@ -12,7 +12,6 @@
 .list-item {
   display: flex;
   padding:5px;
-  /* width: 60%; */
   margin-bottom: 0.2rem;
   border-radius: 5px;
   background-color: antiquewhite;
