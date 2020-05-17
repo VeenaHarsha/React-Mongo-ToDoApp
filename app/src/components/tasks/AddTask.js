@@ -32,6 +32,34 @@ function AddTask (props) {
     setTaskName(event.target.value)
   }
 
+  const handleCheckBox = (event, task) => {
+    const newTask = { ...task, [event.target.name]: event.target.checked }
+    updateTaskCompleted(newTask)
+  }
+  const updateTaskCompleted = async (selectedTask) => {
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        taskId: selectedTask._id,
+        taskName: selectedTask.taskName,
+        completed: selectedTask.completed
+      })
+    }
+    try {
+      const response = await window.fetch(`http://localhost:2809/task/update/${listItemId}`, options)
+      const data = await response.json()
+      data.tasks.map(task => {
+        if (task._id === selectedTask._id) {
+          setTasks({ ...task, ...{ completed: task.completed } })
+        }
+      })
+    } catch (err) {
+      console.log('Error:', err)
+    }
+  }
   const handleAddTasks = (task) => {
     setTasks(task)
   }
@@ -82,7 +110,10 @@ function AddTask (props) {
     event.preventDefault()
     const activeItems = tasks.filter(task => !task.completed)
     const completedItems = tasks.filter(task => task.completed)
-    filterType === 'active' ? handleAddTasks(activeItems) : handleAddTasks(completedItems)
+    filterType === 'all' && getTaskItems()
+    filterType === 'active' && handleAddTasks(activeItems)
+    filterType === 'completed' && handleAddTasks(completedItems)
+    // filterType === 'active' ? handleAddTasks(activeItems) : handleAddTasks(completedItems)
   }
 
   const handleClearCompletedTasks = () => {
@@ -94,7 +125,7 @@ function AddTask (props) {
 
   return (
     <div>
-      <h3>{listName}</h3>
+      <p className='showListName'>{listName}</p>
       <div className='list-cat-div'>
         <form onSubmit={handleCreateTask}>
           <input
@@ -108,7 +139,14 @@ function AddTask (props) {
         </form>
       </div>
       {tasks.length && tasks.map(task => (
-        <div key={task._id} className='task-item'>
+        <div key={task.taskName} className='task-item'>
+          <input
+            type='checkbox'
+            name='completed'
+            className='completed'
+            checked={task.completed}
+            onChange={(e) => handleCheckBox(e, task)}
+          />
           <div className='pValue' onClick={() => handleClick(true, task)}> {task.taskName}
             {task.dueDate && <p><small>Due on: {task.dueDate}</small></p>}
           </div>
@@ -117,6 +155,7 @@ function AddTask (props) {
       ))}
       <div className='flex-footer'>
         <div className='btn-show'>
+          <button onClick={(e) => buttonHandler(e, 'all')}>All</button>
           <button onClick={(e) => buttonHandler(e, 'active')}>Active</button>
           <button onClick={(e) => buttonHandler(e, 'completed')}>Completed</button>
         </div>

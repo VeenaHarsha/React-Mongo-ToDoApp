@@ -73,9 +73,9 @@ function ToDoApp () {
   }
 
   return (
-    <div>
+    <div className='container'>
       <div className='header'>
-        <h1>To Do App </h1>
+        <h1>Reminder</h1>
       </div>
       <div className='row'>
         <div className='column side'>
@@ -88,7 +88,7 @@ function ToDoApp () {
           <div>
             {listItems.length && listItems.map(lItem => (
               <ShowListItems
-                key={lItem._id}
+                key={lItem.listName}
                 handleUserListRequest={onSetUserListRequest}
                 listItem={lItem}
                 listItems={listItems}
@@ -108,6 +108,7 @@ function ToDoApp () {
               listItemId={userListRequest.selectedList}
               handleUserTaskRequest={onSetUserTaskRequest}
               handleSetTaskEditForm={handleSetTaskEditForm}
+              selectedTask={userTaskRequest.selectedTask}
             />}
         </div>
         <div className='column side'>

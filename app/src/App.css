@@ -1,24 +1,16 @@
-*{
- box-sizing: border-box;
- font-family:  monospace,verdana, 'Courier New', Courier, monospace,Arial, Helvetica, sans-serif;
-}
- .app-title{
-   height: 3em;
-   text-align: center;
-   width: 100%;
-   font-weight: bold;
-   font-size: 20px;
- }
- .main-app {
-  width: 30%;
-  margin-top:auto;
-  float:left;
- }
 
+*{
+  margin: 0;
+ box-sizing: border-box;
+ font-family:  'Courier New', Courier, monospace,Arial, Helvetica, sans-serif;
+}
+body {
+  background:#CCC58E;
+}
 .header {
-  padding: 10px;
-  text-align: center;
-  background-color:antiquewhite;
+  padding: 1.5em;
+  background-color: #485C2B;
+  color:#CCC58E;
 }
 
 .flex-footer{
@@ -29,22 +21,13 @@
   width:100%;
   height:10vh;
   padding: 10px;
-  background-color:antiquewhite;
+  background-color:#485C2B;
   justify-content: space-between;
   margin-top: 1rem;
   text-align: center;
 }
 
-.btn-show button, .btn-clear button{
-  padding: 6px 6px;
-  margin: 1px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    color:white;
-    font-weight: bold;
-    background-color: #A0522D;
-}
+
 
 .column {
   float: left;
@@ -66,8 +49,15 @@
 }
 
 /* TaskEditForm - container */
+.showListName {
+  text-align: center;
+  color:#485C2B;
+  font-weight: bold;
+  font-size: 1.5em;
+  font-family: 'Courier New', Courier, monospace;
+}
 .task-form-container{
-  background-color: antiquewhite;
+  background-color: #EAE7D1;
   border-radius: 5px;
   padding:10px;
 }
@@ -103,13 +93,32 @@
     display: inline-block;
     color:white;
     font-weight: bold;
-    background-color: #A0522D;
+    background-color: #485C2B;
+}
+.btn-show button,
+.btn-clear button {
+    padding: 6px 6px;
+    margin: 1px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color:white;
+    font-weight: bold;
 }
 
-.btn-show button{
-  background-color: rgb(107, 51, 24);
+.btn-show button,
+.btn-clear button {
+  background-color: #CCC58E;
+  color:#7B8455;
 }
 
-.btn-show button:hover{background-color:orange;}
+.btn-show button:hover ,
+.btn-clear button:hover {
+  background-color:orange;
+  color:whitesmoke;
+}
 
-.btn-show button:focus{background-color:red;}
+.btn-show button:focus,
+.btn-clear button:focus {
+  background-color:#D98A34;
+}

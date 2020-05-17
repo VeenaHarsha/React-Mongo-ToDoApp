@@ -7,7 +7,6 @@ function TaskEditForm (props) {
     const target = event.target
     const name = target.name
     const value = target.type === 'checkbox' ? target.checked : target.value
-    // props.setSelectedTask({ ...selectedTask, [name]: value })
     handleUserTaskRequest(true, { ...selectedTask, [name]: value })
   }
 
@@ -22,7 +21,7 @@ function TaskEditForm (props) {
         taskId: selectedTask._id,
         taskName: selectedTask.taskName,
         notes: selectedTask.notes,
-        dueDate: selectedTask.dueDate,
+        dueDate: new Date(selectedTask.dueDate),
         priority: selectedTask.priority,
         completed: selectedTask.completed
       })
@@ -42,17 +41,6 @@ function TaskEditForm (props) {
   return (
     <div className='task-form-container' style={{ display: showTaskEditForm ? 'block' : 'none' }}>
       <form onSubmit={handleTaskUpdate}>
-        <div>
-          <input
-            type='checkbox'
-            name='completed'
-            checked={selectedTask.completed}
-            onChange={handleInputChange}
-          />
-          <label>
-            Completed
-          </label>
-        </div>
         <div>
           <label>Task Name</label>
           <input
@@ -82,11 +70,11 @@ function TaskEditForm (props) {
           <option value='mid'> Mid </option>
           <option value='low'> Low </option>
         </select>
-        <label>Due Date </label>
+        <label> Due Date </label>
         <input
           type='date'
           name='dueDate'
-          defaultValue={selectedTask.dueDate}
+          defaultValue={new Date(selectedTask.dueDate)}
           onChange={handleInputChange}
         />
         <button onClick={clickHandler}>Update</button>

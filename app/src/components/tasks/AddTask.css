@@ -3,20 +3,20 @@
   padding: 5px;
   margin-bottom: 0.2rem;
   border-radius: 5px;
-  background-color: antiquewhite;
+  background-color:#EAE7D1;
   border:none;
   align-content: center;
 
 }
-h3 {
-  /* background-color:antiquewhite; */
-  text-align: center;
-  padding:2px;
-  font-style: italic;
-}
+
 .imgDel{
   flex: 1;
 }
 .pValue {
   flex-grow: 100
+}
+.completed {
+  padding: 5px;
+  display: inline-block;
+  width:5%;
 }
